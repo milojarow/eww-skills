@@ -609,3 +609,23 @@ eww reload
 ```
 
 If `eww reload` crashes, do NOT manually run `open-windows.sh` — let systemd's Restart=always + ExecStartPost handle it automatically. Running both creates duplicate windows.
+
+---
+
+## Error: Ghost window visible but eww says it's closed
+
+**Symptom:** A window remains visible on screen, but `eww close <name>` reports "no such window was open" and `eww active-windows` does not list it. `eww reload` does not remove it. The window is unresponsive or frozen.
+
+**Cause:** The eww daemon lost internal tracking of the window, but the Wayland layer-shell surface it created is still alive (owned by the daemon's process). This can happen after `eww reload` when the daemon's internal state and the compositor's surface list get out of sync. The surface persists as long as the daemon process lives.
+
+**Why `eww close` and `eww reload` don't work:** `eww close` only destroys windows that exist in eww's internal tracking. Since the daemon forgot about the surface, there is nothing to close. `eww reload` re-reads config and restarts deflisten scripts but does not enumerate or destroy untracked Wayland surfaces.
+
+**Fix:**
+```bash
+# Only a full daemon restart destroys all surfaces owned by the process
+systemctl --user restart eww.service
+```
+
+`systemctl restart` kills the daemon process → the compositor destroys all layer-shell surfaces owned by that process → `ExecStartPost` reopens all windows cleanly.
+
+**Distinguish from orphan process (see above):** If `pgrep -a eww` shows stale `eww open ...` processes with PPID=1, the ghost belongs to an orphan child process, not the current daemon. In that case, `pkill -x eww` is needed. If only one daemon process exists and the surface is still there, it's this bug — restart the service.
