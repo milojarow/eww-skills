@@ -1,0 +1,32 @@
+{
+  "name": "eww-skills",
+  "description": "Expert skills for building eww widgets",
+  "owner": {
+    "name": "milojarow",
+    "url": "https://github.com/milojarow"
+  },
+  "plugins": [
+    {
+      "name": "eww-skills",
+      "source": "./",
+      "description": "6 expert skills for eww widget development — expressions, patterns, styling, troubleshooting, widgets, and yuck syntax.",
+      "version": "1.0.0",
+      "author": {
+        "name": "milojarow",
+        "url": "https://github.com/milojarow"
+      },
+      "category": "desktop",
+      "keywords": [
+        "eww",
+        "widgets",
+        "gtk",
+        "css",
+        "yuck",
+        "wayland"
+      ],
+      "homepage": "https://github.com/milojarow/eww-skills",
+      "repository": "https://github.com/milojarow/eww-skills",
+      "license": "MIT"
+    }
+  ]
+}
