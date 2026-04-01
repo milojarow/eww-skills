@@ -1,6 +1,10 @@
 ---
 name: eww-troubleshooting
 description: Debug and fix eww problems. Use when eww isn't working, windows won't open, config fails to load, styles aren't applying, variables aren't updating, getting compilation errors, or needing to understand eww logs, eww state, or eww debug output.
+metadata:
+  priority: 6
+  pathPatterns: []
+  bashPatterns: ["eww\\s+(logs|state|debug|inspector|kill|daemon|reload)"]
 ---
 
 # eww-troubleshooting — Debug & Fix

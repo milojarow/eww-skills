@@ -1,6 +1,10 @@
 ---
 name: eww-patterns
 description: Build real-world eww widgets using proven patterns. Use when building a status bar, power menu, sidebar, notification popup, workspace indicator, music player, or system monitor, asking for real eww examples, dotfile patterns, or architectural guidance, or when positioning, centering, aligning, or spacing elements within a widget layout.
+metadata:
+  priority: 8
+  pathPatterns: ["**/eww/**/*.yuck", "**/eww/scripts/**"]
+  bashPatterns: ["eww\\s"]
 ---
 
 # eww-patterns — Real-World Patterns

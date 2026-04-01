@@ -1,6 +1,10 @@
 ---
 name: eww-widgets
 description: Choose and configure eww widgets. Use when picking between box/centerbox/overlay/scroll/stack, using button/checkbox/input/scale, displaying data with label/image/progress/circular-progress/graph, using systray or revealer animations, accessing EWW_RAM/EWW_CPU/EWW_BATTERY/EWW_DISK/EWW_NET magic variables, or understanding widget alignment (halign, valign, hexpand, vexpand, centering, spacing, tug-of-war expand behavior, push to edge).
+metadata:
+  priority: 5
+  pathPatterns: ["**/eww/widgets/**/*.yuck"]
+  bashPatterns: []
 ---
 
 # eww-widgets — Widget Reference & Magic Variables

@@ -1,6 +1,10 @@
 ---
 name: eww-yuck
 description: Core eww yuck configuration syntax. Use when writing eww.yuck config files, defining windows with defwindow, creating widgets with defwidget, declaring variables with defvar/defpoll/deflisten, structuring layouts with include or for loops, or setting up a new eww installation.
+metadata:
+  priority: 7
+  pathPatterns: ["**/*.yuck", "**/eww/*.yuck"]
+  bashPatterns: ["eww\\s+(daemon|reload|open|close|kill|list-windows|active-windows|state)"]
 ---
 
 # eww-yuck — Core Configuration

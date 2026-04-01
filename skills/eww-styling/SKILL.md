@@ -1,6 +1,10 @@
 ---
 name: eww-styling
 description: Style eww widgets with GTK CSS/SCSS. Use when writing eww.scss, applying CSS to widgets, using GTK selectors, setting up SCSS variables or theming, using dynamic CSS classes, debugging styles with eww inspector, or applying the required * { all: unset; } reset.
+metadata:
+  priority: 7
+  pathPatterns: ["**/eww/**/*.scss", "**/eww/**/*.css", "**/eww/eww.scss"]
+  bashPatterns: ["eww\\s+inspector"]
 ---
 
 # eww-styling — GTK CSS/SCSS

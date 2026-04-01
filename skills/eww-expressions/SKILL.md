@@ -1,6 +1,10 @@
 ---
 name: eww-expressions
 description: Write and debug eww expressions. Use when writing ${} expressions, using operators (ternary ?:, elvis ?:, safe access ?.), calling functions (round, jq, formattime, formatbytes, strlength, replace), accessing JSON/object/array data, or filtering with regex =~.
+metadata:
+  priority: 5
+  pathPatterns: ["**/eww/**/*.yuck"]
+  bashPatterns: []
 ---
 
 # eww-expressions — Expression Language
