@@ -249,4 +249,6 @@ This skill covers architectural patterns and real examples. For deeper reference
 | [POPUP_PATTERNS.md](./POPUP_PATTERNS.md) | Power menu, calendar popup, volume OSD, notification revealer — complete yuck + scss |
 | [DATA_PATTERNS.md](./DATA_PATTERNS.md) | defpoll JSON, deflisten streams, shell scripts, `for` loops, dynamic class state |
 | [COMMUNITY.md](./COMMUNITY.md) | Curated snippets with attribution: battery icon, network indicator, music player, workspace buttons, volume slider, activate-linux widget, modular file structure |
+| [POSITIONING.md](./POSITIONING.md) | Spacing, alignment, centering — plus anchor-axis traps and stacking-layer conflicts with wallpaper daemons |
+| [CLICK_HANDLERS.md](./CLICK_HANDLERS.md) | Click latency cost model and patterns for keeping buttons responsive |
 | [README.md](./README.md) | Navigation guide — start here if lost |

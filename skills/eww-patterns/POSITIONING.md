@@ -234,6 +234,90 @@ by the anchor, not by the sign of the value.
 
 ---
 
+## Anchor Edge vs Anchor Center — One Axis Is Locked
+
+**Critical gotcha:** Layer-shell anchors that name a single edge ("center left",
+"center right", "top center", "bottom center") **lock the perpendicular axis**.
+The compositor centers the surface along the unnamed axis and ignores any offset
+on that axis.
+
+| Anchor | `:x` works? | `:y` works? |
+|--------|:-----------:|:-----------:|
+| `"top left"`, `"top right"`, `"bottom left"`, `"bottom right"` | YES | YES |
+| `"top center"`, `"bottom center"` | YES (offset from horizontal center) | YES |
+| `"center left"`, `"center right"` | YES | **NO — silently ignored** |
+| `"center"` (alone) | YES (from center) | YES (from center) |
+
+**Symptom:** You set `:y "100px"` on a `"center left"`-anchored window and the
+widget doesn't move vertically no matter what value you use. `:x` works fine.
+
+**Cause:** With `anchor "center left"`, only the LEFT edge is anchored.
+"center" here means "vertically centered" — a constraint, not an offset
+reference. The compositor locks vertical position to screen center and
+discards the y offset.
+
+**Fix:** Use a corner anchor (`"top left"`, `"bottom left"`, etc.) so both
+axes have a fixed reference point. Convert your y value to a corner-relative
+coordinate. Example for a 1080-tall display, vertically centered widget that
+is ~80px tall:
+
+```lisp
+;; ❌ WRONG — y is ignored, widget always vertically centered
+:geometry (geometry :x "120px" :y "150px" :anchor "center left")
+
+;; ✅ CORRECT — top-left anchor lets y move the widget
+:geometry (geometry :x "120px" :y "500px" :anchor "top left")
+```
+
+Same applies to `"top center"` / `"bottom center"` if you ever try to use x
+as a horizontal offset there — `x` works but represents distance from
+horizontal center, not the left edge.
+
+---
+
+## Stacking Layer vs swaybg — Why `"bg"` Widgets Vanish on Wallpaper Change
+
+**Symptom:** Desktop widgets using `:stacking "bg"` are visible at startup but
+**disappear after the user changes the wallpaper** (e.g. via `swaymsg "output * bg ..."`,
+`swww`, `wpaperd`, or any wallpaper picker). Other widgets using `"fg"`, `"bottom"`,
+or `"overlay"` are unaffected.
+
+**Cause:** Both eww's `"bg"` stacking and the wallpaper daemon (swaybg, swww,
+wpaperd) use the wlr-layer-shell `background` layer. Within a layer, surfaces
+stack in creation order — newer on top. When the user changes wallpaper, the
+wallpaper daemon creates a NEW background surface, which lands on top of every
+existing eww `"bg"` widget and hides them.
+
+The four wlr-layer-shell layers, bottom to top:
+
+```
+background  ← swaybg / wallpaper daemons live here. eww :stacking "bg" too.
+bottom      ← above wallpaper, below normal windows. Safe for desktop widgets.
+top         ← above normal windows. eww :stacking "fg" maps here.
+overlay     ← above everything (locks, OSDs).
+```
+
+**Fix:** Use `:stacking "bottom"` for any persistent desktop widget that needs
+to remain visible above the wallpaper. Reserve `"bg"` only for surfaces that
+should genuinely sit at the bottom (rare — usually just the wallpaper itself).
+
+```lisp
+;; ❌ FRAGILE — disappears on wallpaper change
+(defwindow disk-widget
+  :stacking "bg"
+  ...)
+
+;; ✅ ROBUST — always above wallpaper, below windows
+(defwindow disk-widget
+  :stacking "bottom"
+  ...)
+```
+
+This also affects positioning under apps like grimshot, wf-recorder, or any
+tool that creates a transient layer-shell surface — same root cause.
+
+---
+
 ## Size-Forcing vs Self-Contained — Critical Distinction
 
 | Technique | Window grows? | Survives `eww reload`? | Restores with reload? |
@@ -289,5 +373,5 @@ for w in $(eww active-windows 2>/dev/null | cut -d: -f1); do
 done
 
 # 3. Check stacking layers — higher layers block lower ones
-# bottom < bg < fg < overlay
+# bg < bottom < fg < overlay  (wlr-layer-shell order, bottom-to-top)
 ```

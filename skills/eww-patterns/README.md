@@ -11,7 +11,8 @@ Real-world eww widget patterns from community configs. Start here to find what y
 | `POPUP_PATTERNS.md` | Power menu, calendar popup, volume OSD, notification panel — complete yuck + scss |
 | `DATA_PATTERNS.md` | defpoll JSON, deflisten streams, shell scripts, `for` loops, dynamic CSS classes |
 | `COMMUNITY.md` | Curated snippets: battery icon, network indicator, music player, workspace buttons, volume slider, activate-linux, metric component, modular file structure |
-| `POSITIONING.md` | Spacing, alignment, centering, gaps, colored headers, window geometry sign convention — proven techniques with failure modes |
+| `POSITIONING.md` | Spacing, alignment, centering, gaps, colored headers, window geometry sign convention, anchor-axis traps, stacking-layer conflicts with wallpaper daemons |
+| `CLICK_HANDLERS.md` | Click latency cost model, tempfile caching, batched updates, fire-and-forget side effects — keep buttons responsive |
 
 ## Quick Start
 
@@ -20,6 +21,7 @@ Real-world eww widget patterns from community configs. Start here to find what y
 **Connecting live data to widgets?** Read `DATA_PATTERNS.md`.
 **Looking for a specific snippet (battery icon, music player, etc.)?** Read `COMMUNITY.md`.
 **Positioning, aligning, or spacing elements?** Read `POSITIONING.md`.
+**Buttons feel laggy or clicks get dropped?** Read `CLICK_HANDLERS.md`.
 **Not sure?** Read `SKILL.md` — the Pattern Selection Guide table maps your goal to the right file and section.
 
 ## Related Skills

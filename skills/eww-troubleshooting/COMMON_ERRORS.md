@@ -629,3 +629,89 @@ systemctl --user restart eww.service
 `systemctl restart` kills the daemon process → the compositor destroys all layer-shell surfaces owned by that process → `ExecStartPost` reopens all windows cleanly.
 
 **Distinguish from orphan process (see above):** If `pgrep -a eww` shows stale `eww open ...` processes with PPID=1, the ghost belongs to an orphan child process, not the current daemon. In that case, `pkill -x eww` is needed. If only one daemon process exists and the surface is still there, it's this bug — restart the service.
+
+---
+
+## Error: `:stacking "bg"` widgets disappear after a wallpaper change
+
+**Symptom:** All desktop widgets defined with `:stacking "bg"` (clock, system monitor, disk usage, etc.) become invisible the moment the user applies a new wallpaper through `swaymsg "output * bg ..."`, swww, wpaperd, or any wallpaper picker. `eww active-windows` still lists them as open. Widgets using `"fg"`, `"bottom"`, or `"overlay"` are not affected.
+
+**Cause:** Both eww's `"bg"` stacking and the wallpaper daemon (swaybg, swww, wpaperd) live in the wlr-layer-shell **background** layer. Within a layer, wlroots stacks surfaces in creation order — newer surfaces draw on top. When the wallpaper changes, the wallpaper daemon creates a fresh background surface, which lands on top of every existing eww `"bg"` widget and obscures them entirely.
+
+**Fix:** Use `:stacking "bottom"` for any persistent desktop widget that must remain visible above the wallpaper. The four wlr-layer-shell layers, bottom-to-top:
+
+```
+background  ← eww "bg" lives here. So do swaybg/swww/wpaperd. They WILL conflict.
+bottom      ← eww "bottom" maps here. Above wallpaper, below normal windows.
+top         ← eww "fg" maps here. Above normal windows.
+overlay     ← eww "overlay". Above everything (locks, OSDs).
+```
+
+```lisp
+;; ❌ FRAGILE — disappears whenever the user changes wallpaper
+(defwindow disk-widget
+  :stacking "bg"
+  ...)
+
+;; ✅ ROBUST — always above wallpaper, below normal windows
+(defwindow disk-widget
+  :stacking "bottom"
+  ...)
+```
+
+Reserve `"bg"` for surfaces that should genuinely sit at the very bottom (rare; usually only the wallpaper itself). For most desktop widgets, `"bottom"` is the correct default.
+
+**Bulk migration when a config has many `"bg"` widgets:**
+
+```bash
+sed -i 's|:stacking "bg"|:stacking "bottom"|g' ~/.config/eww/widgets/*.yuck
+systemctl --user restart eww.service
+```
+
+---
+
+## Error: Click handlers feel laggy / clicks are dropped
+
+**Symptom:** Clicking a button rapidly registers some clicks but skips others. The widget feels unresponsive even though `eww ping` succeeds and the daemon isn't crashed. Single, well-spaced clicks work fine.
+
+**Cause:** The click handler script invokes too many `eww` CLI calls. Each is fork+exec+IPC (~50-150ms). A handler with 3-4 `eww` calls takes 300-500ms to return; a click during that window queues against the daemon's serialized command stream and the user perceives it as dropped.
+
+**Fix:** Reduce the number of `eww` CLI calls per click. The most effective patterns:
+
+1. **Cache rarely-changing state in tempfiles**, written by the producer (deflisten or init script) and read directly with bash `$(<file)` — no fork.
+2. **Batch updates**: `eww update foo=1 bar=2` in a single call instead of two.
+3. **Background slow side effects** (`swaymsg`, network, disk) with `( cmd ) &` so the handler returns immediately.
+4. **Trust the cache**, skip per-click validation.
+
+See `eww-patterns/CLICK_HANDLERS.md` for the full cost model and worked examples.
+
+**Diagnostic:**
+
+```bash
+time ~/.config/eww/scripts/my-handler.sh next
+# < 100ms  fine
+# 100-300ms  borderline; rapid clicks queue
+# > 300ms  noticeably laggy
+```
+
+If the handler itself is fast but rapid clicks still drop, check for hung CLIs piling up in the daemon's queue: `pgrep -af 'eww (open|close|update)'`.
+
+---
+
+## Error: `:y` offset ignored on `"center left"` / `"center right"` (or `:x` on `"top center"` / `"bottom center"`)
+
+**Symptom:** With `:anchor "center left"`, changing `:y` does nothing — the widget stays vertically centered no matter what value you set. `:x` works as expected. (And vice versa for `"top center"` / `"bottom center"` if `:x` is used.)
+
+**Cause:** wlr-layer-shell anchors that name a single edge ("center left", "center right", "top center", "bottom center") **lock the perpendicular axis**. The compositor centers the surface on the unnamed axis and discards any offset on it. "center" in the anchor string is a constraint, not an offset reference.
+
+**Fix:** Use a corner anchor (`"top left"`, `"top right"`, `"bottom left"`, `"bottom right"`) so both axes have a fixed reference point. Convert your offset to a corner-relative coordinate. For a vertically centered widget on a 1080-tall display:
+
+```lisp
+;; ❌ y is silently ignored — widget always vertically centered
+:geometry (geometry :x "120px" :y "100px" :anchor "center left")
+
+;; ✅ y measured from top edge — widget can be moved vertically
+:geometry (geometry :x "120px" :y "510px" :anchor "top left")
+```
+
+This trap is especially common in widget-mover scripts that edit `:y` in place: the file change happens, but the widget visually doesn't move on close+open because the y is still being ignored by the compositor.
