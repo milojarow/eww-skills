@@ -13,6 +13,7 @@ Real-world eww widget patterns from community configs. Start here to find what y
 | `COMMUNITY.md` | Curated snippets: battery icon, network indicator, music player, workspace buttons, volume slider, activate-linux, metric component, modular file structure |
 | `POSITIONING.md` | Spacing, alignment, centering, gaps, colored headers, window geometry sign convention, anchor-axis traps, stacking-layer conflicts with wallpaper daemons |
 | `CLICK_HANDLERS.md` | Click latency cost model, tempfile caching, batched updates, fire-and-forget side effects — keep buttons responsive |
+| `NATIVE_FIRST.md` | Use eww's native widgets (circular-progress, graph, etc.) before building external renderers; the canonical anti-pattern of PNG-rendered gauges in /tmp and how to migrate away from it |
 
 ## Quick Start
 
@@ -22,6 +23,7 @@ Real-world eww widget patterns from community configs. Start here to find what y
 **Looking for a specific snippet (battery icon, music player, etc.)?** Read `COMMUNITY.md`.
 **Positioning, aligning, or spacing elements?** Read `POSITIONING.md`.
 **Buttons feel laggy or clicks get dropped?** Read `CLICK_HANDLERS.md`.
+**About to render images from a script for live data?** Read `NATIVE_FIRST.md` first — eww probably has a native widget for it.
 **Not sure?** Read `SKILL.md` — the Pattern Selection Guide table maps your goal to the right file and section.
 
 ## Related Skills

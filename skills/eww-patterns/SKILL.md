@@ -251,4 +251,5 @@ This skill covers architectural patterns and real examples. For deeper reference
 | [COMMUNITY.md](./COMMUNITY.md) | Curated snippets with attribution: battery icon, network indicator, music player, workspace buttons, volume slider, activate-linux widget, modular file structure |
 | [POSITIONING.md](./POSITIONING.md) | Spacing, alignment, centering — plus anchor-axis traps and stacking-layer conflicts with wallpaper daemons |
 | [CLICK_HANDLERS.md](./CLICK_HANDLERS.md) | Click latency cost model and patterns for keeping buttons responsive |
+| [NATIVE_FIRST.md](./NATIVE_FIRST.md) | Use eww's native widgets before building external renderers; canonical PNG-gauge anti-pattern and migration |
 | [README.md](./README.md) | Navigation guide — start here if lost |
