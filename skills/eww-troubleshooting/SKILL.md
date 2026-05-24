@@ -61,7 +61,7 @@ This prints all events, expression evaluations, and script invocations to stdout
 
 ---
 
-## Top 5 Most Common Issues
+## Top 6 Most Common Issues
 
 | # | Issue | One-Line Fix |
 |---|-------|-------------|
@@ -70,6 +70,7 @@ This prints all events, expression evaluations, and script invocations to stdout
 | 3 | Variable not updating | Test the script manually in terminal; add `:run-while true` to `defpoll` |
 | 4 | Script not found | Use absolute paths in `defpoll`/`deflisten`; eww does not inherit shell PATH |
 | 5 | Config parse error | Count unmatched parentheses; check `eww logs` for "parse error at line X" |
+| 6 | Bar lags / misses updates | The `deflisten` script does too much work per event (classic: scans all of `/proc`) — keep the event path cheap (see "Laggy bar" below) |
 
 ---
 
@@ -333,6 +334,58 @@ Both bare references and `{}` form are valid for direct attribute values:
 ```
 
 > CRITICAL: If you are diagnosing a widget that doesn't update and your first suspicion is "missing `{}` on the attribute", verify first with `eww state` that the variable has the expected value. `(label :text battery)` is not a bug — it is perfectly valid yuck syntax.
+
+---
+
+## Laggy bar / missed updates — profile the event path
+
+A `deflisten`-backed widget (workspaces, window title — anything driven by a
+WM event stream) can fall behind: you switch workspace and the bar updates
+late or not at all, **worst under memory pressure or with many processes
+running**, while a native C bar (waybar) reacts instantly. The daemon isn't
+slow — your **listener script is doing too much work per event**.
+
+`deflisten` re-runs its emit path on *every* event, and WMs fire several
+events per action (one workspace switch emits `workspace` + `window` focus +
+more). Anything O(processes) or O(disk) on that path is paid every single
+time, several times per keypress.
+
+**The canonical offender: scanning `/proc` on every event.** Walking every
+`/proc/<pid>` (to map process trees, detect a TUI like ranger inside a
+terminal, etc.) costs ~30 ms with a few hundred processes — and balloons to
+hundreds of ms once those reads start hitting swap. That is exactly why the
+bar dies *only when the machine is loaded*.
+
+**Diagnose — time the emit path in isolation** (import the listener, call its
+build/emit function in a loop, print per-call ms):
+
+```bash
+python3 - <<'PY'
+import time, importlib.util
+spec = importlib.util.spec_from_file_location("m", "scripts/<your-listener>.py")
+m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+# set up args the way main() does (e.g. swaymsg get_tree / get_workspaces), then:
+for _ in range(5):
+    t = time.perf_counter(); m.build_output(...); print(f"{(time.perf_counter()-t)*1000:.2f} ms")
+PY
+```
+
+Time each piece separately. A `swaymsg -t get_tree` IPC call is ~3 ms; a full
+`/proc` scan is ~30 ms+. The IPC call is rarely the problem — the per-event
+compute is.
+
+**Fix — keep the event path cheap:**
+
+- Cut work that only feeds a cosmetic detail. Removing a per-event `/proc`
+  scan that existed solely to pick one icon took a real listener from ~32 ms
+  to ~0.1 ms per event (≈300×) and stopped it degrading under load.
+- If you genuinely must inspect a process subtree, walk only it via
+  `/proc/<pid>/task/<tid>/children` — never scan all of `/proc`.
+- Cache values that rarely change instead of recomputing them every event.
+- Target O(1) or O(windows) per event, never O(system processes).
+
+Rule of thumb: a `deflisten` emit should take a few ms. If it doesn't, that is
+why the bar feels dead next to waybar.
 
 ---
 
