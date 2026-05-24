@@ -436,19 +436,20 @@ For windows that need keyboard input (like launchers):
 **Cause:** More than one eww daemon is running. This can happen when eww crashes or when the daemon is started multiple times.
 
 **Fix:**
+
+**If eww is managed by a systemd user service (`Restart=always`) — the common desktop case:** do NOT `pkill`/`eww kill` and restart by hand. The instant you kill it, systemd relaunches its own daemon, and your manual `eww daemon` becomes a *second* one → duplicate bars. Just restart the unit (clean kill + single start):
 ```bash
-# Kill all eww daemon processes
-pkill -f "eww daemon"
-
-# Verify no eww processes remain
-pgrep -a eww
-
-# Start a clean daemon
-eww daemon
-
-# Open your windows
-eww open bar
+systemctl --user restart eww.service
 ```
+
+**Only if eww runs standalone (no systemd manager):**
+```bash
+pkill -f "eww daemon"   # kill all daemon processes
+pgrep -a eww            # verify none remain
+eww daemon              # start one clean daemon
+eww open bar            # open your windows
+```
+See [SYSTEMD.md](SYSTEMD.md) for why duplicate bars happen under a restarting service.
 
 ---
 

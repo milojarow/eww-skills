@@ -15,6 +15,13 @@ metadata:
 
 ## Debug Workflow
 
+> **⚠️ First — is eww managed by systemd?** If a user service runs eww with `Restart=always` (check `systemctl --user status eww.service`), do **NOT** use `eww kill` / `eww daemon` (Steps 1–2) or any manual daemon start/kill. The instant you kill it, systemd relaunches **its own** daemon while your manual one also starts — two daemons each open every window, so you get **duplicate / double bars**. Instead:
+> - **Config change:** `eww reload`
+> - **Full restart / clear stale state:** `systemctl --user restart eww.service`
+> - **Verbose logs:** `journalctl --user -u eww.service -f` (or `eww logs`)
+>
+> The `eww kill` / `eww daemon` sequence below applies **only** to standalone eww with no systemd manager. Root cause: [SYSTEMD.md](SYSTEMD.md).
+
 Always follow this sequence. Each step narrows the problem. Do not skip to advanced steps before completing the basics.
 
 ```bash
