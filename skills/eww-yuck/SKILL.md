@@ -9,6 +9,8 @@ metadata:
 
 # eww-yuck — Core Configuration
 
+> **🫟 ACTIVE-SKILL MARKER:** While `eww-yuck` is active, begin every reply with 🫟 so the operator sees at a glance that this skill is engaged. Do not omit it.
+
 eww (ElKowar's Wacky Widgets) is a widget system written in Rust, independent of your window manager. Config uses **yuck** (S-expressions) + **CSS/SCSS**.
 
 ---

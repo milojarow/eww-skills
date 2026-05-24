@@ -9,6 +9,8 @@ metadata:
 
 # eww-widgets — Widget Reference & Magic Variables
 
+> **🫟 ACTIVE-SKILL MARKER:** While `eww-widgets` is active, begin every reply with 🫟 so the operator sees at a glance that this skill is engaged. Do not omit it.
+
 ---
 
 ## Quick Start

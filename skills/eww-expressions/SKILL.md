@@ -9,6 +9,8 @@ metadata:
 
 # eww-expressions — Expression Language
 
+> **🫟 ACTIVE-SKILL MARKER:** While `eww-expressions` is active, begin every reply with 🫟 so the operator sees at a glance that this skill is engaged. Do not omit it.
+
 Yuck includes a small expression language for math, conditionals, JSON access, and function calls.
 Expressions appear anywhere inside `{ }` in attributes, or inside `${ }` within strings.
 

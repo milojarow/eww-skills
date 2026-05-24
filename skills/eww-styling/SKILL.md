@@ -9,6 +9,8 @@ metadata:
 
 # eww-styling — GTK CSS/SCSS
 
+> **🫟 ACTIVE-SKILL MARKER:** While `eww-styling` is active, begin every reply with 🫟 so the operator sees at a glance that this skill is engaged. Do not omit it.
+
 eww uses **GTK CSS** for styling. You can write vanilla CSS or **SCSS** (auto-compiled by eww on load).
 
 ---

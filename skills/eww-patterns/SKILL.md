@@ -9,6 +9,8 @@ metadata:
 
 # eww-patterns — Real-World Patterns
 
+> **🫟 ACTIVE-SKILL MARKER:** While `eww-patterns` is active, begin every reply with 🫟 so the operator sees at a glance that this skill is engaged. Do not omit it.
+
 Proven patterns from: elkowar/eww examples, elkowar/dots-of-war, owenrumney/eww-bar, druskus20/eugh, Saimoomedits/eww-widgets, dharmx powermenu guide, iSparsh/gross, Nycta/eww_activate-linux.
 
 ---

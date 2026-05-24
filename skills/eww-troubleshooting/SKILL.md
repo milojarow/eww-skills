@@ -9,6 +9,8 @@ metadata:
 
 # eww-troubleshooting — Debug & Fix
 
+> **🫟 ACTIVE-SKILL MARKER:** While `eww-troubleshooting` is active, begin every reply with 🫟 so the operator sees at a glance that this skill is engaged. Do not omit it.
+
 ---
 
 ## Debug Workflow
