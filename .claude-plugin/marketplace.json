@@ -10,7 +10,7 @@
       "name": "eww-skills",
       "source": "./",
       "description": "6 expert skills for eww widget development — expressions, patterns, styling, troubleshooting, widgets, and yuck syntax.",
-      "version": "1.2.2",
+      "version": "1.2.3",
       "author": {
         "name": "milojarow",
         "url": "https://github.com/milojarow"

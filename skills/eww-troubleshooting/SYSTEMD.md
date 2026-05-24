@@ -34,11 +34,11 @@ This sequence:
 
 ## Single Source of Truth for Window Opening
 
-**RULE:** Always use `systemctl --user restart eww.service` to restart eww. Never run `open-windows.sh` manually.
+**RULE:** Always use `systemctl --user restart eww.service` to restart eww. Never run the startup window-opening script manually.
 
 ### Why
 
-The systemd service ExecStartPost automatically calls `open-windows.sh` after the daemon starts. If you ALSO run `open-windows.sh` manually (or via `eww reload` + manual open), two sources open windows — creating duplicates.
+If your unit's `ExecStartPost` runs a window-opening script (here called `open-windows.sh`) after the daemon starts, then ALSO running that script manually — or via `eww reload` + a manual open — gives two sources opening windows, creating duplicates.
 
 ```bash
 # ❌ WRONG — two sources of window opening
@@ -55,9 +55,9 @@ systemctl --user restart eww.service
 
 ### When You Need to Open a Single Window
 
-For opening individual windows (like the arrow widget), use `eww open` directly — it's safe for single windows that aren't in `open-windows.sh`:
+For opening one-off windows (e.g. an on-demand popup or overlay), use `eww open` directly — it's safe for single windows that the startup script doesn't open:
 
 ```bash
-eww open widget-de-las-flechas   # fine — not in open-windows.sh
-eww close widget-de-las-flechas  # clean close
+eww open my-popup   # fine — not in open-windows.sh
+eww close my-popup  # clean close
 ```
