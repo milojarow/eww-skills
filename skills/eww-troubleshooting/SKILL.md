@@ -231,10 +231,10 @@ Before assuming eww is broken, verify that your scripts work in isolation.
 bash -c 'date +%H:%M'
 
 # For a script file
-/home/milo/.config/eww/scripts/getvol
+~/.config/eww/scripts/getvol
 
 # Simulate the minimal environment eww runs scripts in
-env -i HOME=$HOME PATH=/usr/bin:/bin bash -c '/home/milo/.config/eww/scripts/getvol'
+env -i HOME=$HOME PATH=/usr/bin:/bin bash -c '~/.config/eww/scripts/getvol'
 ```
 
 The script must print exactly one value to stdout and exit 0.
@@ -243,10 +243,10 @@ The script must print exactly one value to stdout and exit 0.
 
 ```bash
 # Run the listener directly — it should print one line per event
-/home/milo/.config/eww/scripts/swayspaces
+~/.config/eww/scripts/swayspaces
 
 # Or with Python explicitly
-python3 /home/milo/.config/eww/scripts/swayspaces.py
+python3 ~/.config/eww/scripts/swayspaces.py
 ```
 
 The script must output lines continuously to stdout as events occur. If nothing appears after triggering an event, the issue is with the script, not eww.

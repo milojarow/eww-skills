@@ -248,7 +248,7 @@ All EWW_* variables are built-in — no `defpoll` or `defvar` needed. Check live
 
 ```yuck
 ; ❌ WRONG — breaks if config is moved or used by another user
-(image :path "/home/milo/.config/eww/icons/avatar.png")
+(image :path "~/.config/eww/icons/avatar.png")
 
 ; ✅ CORRECT — portable
 (image :path "${EWW_CONFIG_DIR}/icons/avatar.png")

@@ -354,7 +354,7 @@ Gets the value of an environment variable.
 - Returns: the value as a string, or empty string if not set
 
 ```yuck
-{get_env("HOME")}       ; "/home/milo"
+{get_env("HOME")}       ; "/home/user"
 {get_env("DISPLAY")}    ; ":0"
 {get_env("USER")}       ; "milo"
 {get_env("THEME")}      ; custom env var

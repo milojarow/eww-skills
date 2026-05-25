@@ -37,7 +37,7 @@ Example entries:
 
 ```
 INFO   2024-01-15 14:32:01  Starting eww daemon
-INFO   2024-01-15 14:32:01  Loading config from /home/milo/.config/eww
+INFO   2024-01-15 14:32:01  Loading config from ~/.config/eww
 ERROR  2024-01-15 14:32:01  Failed to parse config: unexpected ')' at line 42
 INFO   2024-01-15 14:32:05  Opening window: bar
 WARN   2024-01-15 14:32:06  Script exited with non-zero exit code: 1
@@ -280,13 +280,13 @@ A `defpoll` script must:
 bash -c 'date +%H:%M'
 
 # Test a script file
-/home/milo/.config/eww/scripts/getvol
+~/.config/eww/scripts/getvol
 
 # Simulate minimal PATH environment
-env -i HOME=$HOME PATH=/usr/bin:/bin:/usr/local/bin bash -c '/home/milo/.config/eww/scripts/getvol'
+env -i HOME=$HOME PATH=/usr/bin:/bin:/usr/local/bin bash -c '~/.config/eww/scripts/getvol'
 
 # Check exit code
-/home/milo/.config/eww/scripts/getvol; echo "Exit: $?"
+~/.config/eww/scripts/getvol; echo "Exit: $?"
 ```
 
 If the script outputs nothing, or exits non-zero, eww will not update the variable and will log a warning.
@@ -302,10 +302,10 @@ A `deflisten` script must:
 
 ```bash
 # Run the listener — trigger events and watch for output lines
-/home/milo/.config/eww/scripts/swayspaces
+~/.config/eww/scripts/swayspaces
 
 # Test a Python listener
-python3 /home/milo/.config/eww/scripts/swayspaces.py
+python3 ~/.config/eww/scripts/swayspaces.py
 ```
 
 If you trigger an event (switch workspace, change volume, etc.) and nothing is printed, the script is not detecting the event correctly.
@@ -349,7 +349,7 @@ eww launched from a compositor or systemd service inherits a minimal environment
 (defpoll vol :interval "1s" `waybar-audio`)
 
 ; ✅ CORRECT — absolute path always works
-(defpoll vol :interval "1s" `/home/milo/.local/bin/waybar-audio`)
+(defpoll vol :interval "1s" `~/.local/bin/waybar-audio`)
 ```
 
 Or add PATH export at the top of your script:
@@ -364,10 +364,10 @@ export PATH="$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:/usr/bin:/bin"
 
 ```bash
 # Check
-ls -l /home/milo/.config/eww/scripts/getvol
+ls -l ~/.config/eww/scripts/getvol
 
 # Fix
-chmod +x /home/milo/.config/eww/scripts/getvol
+chmod +x ~/.config/eww/scripts/getvol
 ```
 
 eww runs script files directly. If the file is not executable and has no shebang, it will fail.

@@ -422,7 +422,7 @@ sensors
 ### Structure
 
 ```
-"/home/milo/.config/eww"
+"~/.config/eww"
 ```
 
 ### Access Patterns
@@ -444,7 +444,7 @@ sensors
 
 **Type:** string (static)
 
-The eww command invocation that targets the current config instance. Resolves to something like `eww -c /home/milo/.config/eww`.
+The eww command invocation that targets the current config instance. Resolves to something like `eww -c ~/.config/eww`.
 
 ### Access Patterns
 

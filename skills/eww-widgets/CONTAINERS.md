@@ -323,7 +323,7 @@ Plus all universal properties.
 
 ```yuck
 ; Drag source
-(eventbox :dragvalue "file:///home/milo/document.pdf"
+(eventbox :dragvalue "file://~/document.pdf"
           :dragtype "file"
           :cursor "grab"
   (label :text "Drag me"))

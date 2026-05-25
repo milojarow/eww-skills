@@ -126,7 +126,7 @@ GTK CSS does not support `width`/`height` directly:
 
 ```
 error: 'spacing' is not a valid property name
-    ┌─ /home/milo/.config/eww/eww.scss:NNN:1
+    ┌─ ~/.config/eww/eww.scss:NNN:1
 ```
 
 **Cause:** A yuck widget attribute (`spacing`, `halign`, `valign`, `hexpand`, `vexpand`, `space-evenly`, `orientation`) was written as a CSS property in a `.scss` file. GTK CSS does not recognize these as valid properties. eww stops compiling the stylesheet at the first invalid property, so every rule defined after that line silently disappears.
@@ -313,7 +313,7 @@ bash -c 'date +%H:%M'   # must print a value and exit 0
 Test the script manually first:
 ```bash
 # Script should print lines continuously as events occur
-/home/milo/.config/eww/scripts/swayspaces
+~/.config/eww/scripts/swayspaces
 ```
 
 For Python buffering:
@@ -329,7 +329,7 @@ print(json.dumps(data), flush=True)
 
 ```yuck
 ; ✅ CORRECT — force Python unbuffered mode
-(deflisten workspaces `python3 -u /home/milo/.config/eww/scripts/swayspaces.py`)
+(deflisten workspaces `python3 -u ~/.config/eww/scripts/swayspaces.py`)
 ```
 
 If the script outputs to stderr instead of stdout, redirect it:
@@ -467,7 +467,7 @@ See [SYSTEMD.md](SYSTEMD.md) for why duplicate bars happen under a restarting se
 
 ; ✅ CORRECT — absolute path always resolves regardless of PATH
 (defpoll vol :interval "1s"
-  `/home/milo/.local/bin/waybar-audio`)
+  `~/.local/bin/waybar-audio`)
 ```
 
 Or export PATH at the top of the called script:
