@@ -370,9 +370,14 @@ for _ in range(5):
 PY
 ```
 
-Time each piece separately. A `swaymsg -t get_tree` IPC call is ~3 ms; a full
-`/proc` scan is ~30 ms+. The IPC call is rarely the problem — the per-event
-compute is.
+Time each piece separately — **and measure under real load, not idle.** That
+distinction is everything. Idle, a `swaymsg -t get_tree` looks cheap (~3 ms),
+which is misleading: that call is a `fork()`+`execve()` spawning the WM CLI. A
+full `/proc` scan is ~30 ms+. But under memory pressure (CPU contention + the
+CLI binary paged out to swap) the *spawn itself* was measured at ~14 ms and
+spikes to **seconds** when `execve` has to read the binary back from disk.
+Spawning a process per event is as deadly as the `/proc` scan — and a query
+over a persistent socket is ~1 ms with none of that risk.
 
 **Fix — keep the event path cheap:**
 
@@ -383,6 +388,21 @@ compute is.
   `/proc/<pid>/task/<tid>/children` — never scan all of `/proc`.
 - Cache values that rarely change instead of recomputing them every event.
 - Target O(1) or O(windows) per event, never O(system processes).
+- **Hold a persistent IPC socket; never spawn the WM CLI (`swaymsg`/`i3-msg`)
+  per event.** Spawning the CLI is a `fork`+`exec` every time; a long-lived
+  UNIX socket to `$SWAYSOCK` — subscribe to events on one, reuse another for
+  queries — does the same work with none of the process-creation cost. This is
+  the architectural reason a native bar like waybar stays smooth, not its
+  language. (i3-ipc framing: 6-byte magic `i3-ipc` + u32 length + u32 type in
+  native byte order; event messages set the high bit on the type, which also
+  lets you tell a workspace event from a window event.)
+- **Update incrementally — don't rebuild all state on every event.** Classify
+  the event by message type and `change`. A *focus* change moves no windows, so
+  window-derived state (per-workspace app icons, etc.) cannot have changed:
+  refresh only the cheap flag that did (which thing is focused, from the small
+  `get_workspaces`) and reuse the cached tree. Re-read the full tree only on
+  *structural* changes (window new/close/move). "Rebuild everything on every
+  event" is the trap; "touch only what changed" is the fix.
 
 Rule of thumb: a `deflisten` emit should take a few ms. If it doesn't, that is
 why the bar feels dead next to waybar.
