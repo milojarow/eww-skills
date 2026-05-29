@@ -9,7 +9,7 @@ metadata:
 
 # eww-widgets — Widget Reference & Magic Variables
 
-> **🫟 ACTIVE-SKILL MARKER:** While `eww-widgets` is active, begin every reply with 🫟 so the operator sees at a glance that this skill is engaged. Do not omit it.
+> **🫟 ACTIVE-SKILL MARKER:** Prefija tu reply con 🫟 **solo en turnos donde el trabajo toca el dominio de `eww-widgets`** — composición de widgets — `defwidget`, props, slots, boxes/labels/buttons. La **capa/proyecto da igual** (frontend, backend, n8n, script local — todos valen): lo que importa es si *este turno* toca el dominio. En turnos que NO lo tocan (typecheck, build, deploy, git ops, edición o curl de otros dominios), **omite 🫟** aunque la skill se haya cargado antes en la sesión. Si otras skills activas también aplican al mismo turno, **apila sus emojis** en el prefijo.
 
 ---
 
