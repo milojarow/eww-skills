@@ -1,6 +1,6 @@
 ---
 name: eww-yuck
-description: Core eww yuck configuration syntax. Use when writing eww.yuck config files, defining windows with defwindow, creating widgets with defwidget, declaring variables with defvar/defpoll/deflisten, structuring layouts with include or for loops, or setting up a new eww installation.
+description: Core eww yuck configuration syntax. Use when writing eww.yuck config files, defining windows with defwindow, creating widgets with defwidget, declaring variables with defvar/defpoll/deflisten, structuring layouts with include or for loops, or setting up a new eww installation. Not for GTK CSS/SCSS styling or the expression language inside attributes.
 metadata:
   priority: 7
   pathPatterns: ["**/*.yuck", "**/eww/*.yuck"]
@@ -9,7 +9,7 @@ metadata:
 
 # eww-yuck — Core Configuration
 
-> **🫟 ACTIVE-SKILL MARKER:** Prefija tu reply con 🫟 **solo en turnos donde el trabajo toca el dominio de `eww-yuck`** — sintaxis `.yuck` — `defwidget`/`defpoll`/`include`, ámbito. La **capa/proyecto da igual** (frontend, backend, n8n, script local — todos valen): lo que importa es si *este turno* toca el dominio. En turnos que NO lo tocan (typecheck, build, deploy, git ops, edición o curl de otros dominios), **omite 🫟** aunque la skill se haya cargado antes en la sesión. Si otras skills activas también aplican al mismo turno, **apila sus emojis** en el prefijo.
+> **🫟 ACTIVE-SKILL MARKER:** Prefix your reply with 🫟 **only on turns where the work touches the `eww-yuck` domain** — `.yuck` configuration syntax (defwindow/defwidget/defpoll/include, scope) — regardless of the layer/project (frontend, backend, a local script — all count); what matters is whether *this turn* touches the domain. On turns that do NOT touch it (typecheck, build, deploy, git ops, editing or curl in other domains), **omit 🫟** even if the skill loaded earlier in the session. If other active skills also apply to the same turn, **stack their emojis** in the prefix.
 
 eww (ElKowar's Wacky Widgets) is a widget system written in Rust, independent of your window manager. Config uses **yuck** (S-expressions) + **CSS/SCSS**.
 

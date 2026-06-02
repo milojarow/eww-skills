@@ -1,6 +1,6 @@
 ---
 name: eww-expressions
-description: Write and debug eww expressions. Use when writing ${} expressions, using operators (ternary ?:, elvis ?:, safe access ?.), calling functions (round, jq, formattime, formatbytes, strlength, replace), accessing JSON/object/array data, or filtering with regex =~.
+description: Write and debug eww expressions. Use when writing ${} expressions, using operators (ternary ?:, elvis ?:, safe access ?.), calling functions (round, jq, formattime, formatbytes, strlength, replace), accessing JSON/object/array data, or filtering with regex =~. Not for shell/jq scripting outside yuck expressions.
 metadata:
   priority: 5
   pathPatterns: ["**/eww/**/*.yuck"]
@@ -9,7 +9,7 @@ metadata:
 
 # eww-expressions — Expression Language
 
-> **🫟 ACTIVE-SKILL MARKER:** Prefija tu reply con 🫟 **solo en turnos donde el trabajo toca el dominio de `eww-expressions`** — expressions en `.yuck` — `defvar`/`defpoll`/`deflisten`, lambdas, scope. La **capa/proyecto da igual** (frontend, backend, n8n, script local — todos valen): lo que importa es si *este turno* toca el dominio. En turnos que NO lo tocan (typecheck, build, deploy, git ops, edición o curl de otros dominios), **omite 🫟** aunque la skill se haya cargado antes en la sesión. Si otras skills activas también aplican al mismo turno, **apila sus emojis** en el prefijo.
+> **🫟 ACTIVE-SKILL MARKER:** Prefix your reply with 🫟 **only on turns where the work touches the `eww-expressions` domain** — expressions in `.yuck` (defvar/defpoll/deflisten, lambdas, scope) — regardless of the layer/project (frontend, backend, a local script — all count); what matters is whether *this turn* touches the domain. On turns that do NOT touch it (typecheck, build, deploy, git ops, editing or curl in other domains), **omit 🫟** even if the skill loaded earlier in the session. If other active skills also apply to the same turn, **stack their emojis** in the prefix.
 
 Yuck includes a small expression language for math, conditionals, JSON access, and function calls.
 Expressions appear anywhere inside `{ }` in attributes, or inside `${ }` within strings.

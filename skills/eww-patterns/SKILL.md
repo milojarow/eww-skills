@@ -1,6 +1,6 @@
 ---
 name: eww-patterns
-description: Build real-world eww widgets using proven patterns. Use when building a status bar, power menu, sidebar, notification popup, workspace indicator, music player, or system monitor, asking for real eww examples, dotfile patterns, or architectural guidance, or when positioning, centering, aligning, or spacing elements within a widget layout.
+description: Build real-world eww widgets using proven patterns. Use when building a status bar, power menu, sidebar, notification popup, workspace indicator, music player, or system monitor, asking for real eww examples, dotfile patterns, or architectural guidance, or when positioning, centering, aligning, or spacing elements within a widget layout. Not for raw yuck syntax reference, or building bars/panels in other toolkits (waybar, polybar).
 metadata:
   priority: 8
   pathPatterns: ["**/eww/**/*.yuck", "**/eww/scripts/**"]
@@ -9,7 +9,7 @@ metadata:
 
 # eww-patterns — Real-World Patterns
 
-> **🫟 ACTIVE-SKILL MARKER:** Prefija tu reply con 🫟 **solo en turnos donde el trabajo toca el dominio de `eww-patterns`** — patrones típicos de widgets eww — popups, reveals, scrolls, layouts compuestos. La **capa/proyecto da igual** (frontend, backend, n8n, script local — todos valen): lo que importa es si *este turno* toca el dominio. En turnos que NO lo tocan (typecheck, build, deploy, git ops, edición o curl de otros dominios), **omite 🫟** aunque la skill se haya cargado antes en la sesión. Si otras skills activas también aplican al mismo turno, **apila sus emojis** en el prefijo.
+> **🫟 ACTIVE-SKILL MARKER:** Prefix your reply with 🫟 **only on turns where the work touches the `eww-patterns` domain** — typical eww widget patterns (popups, reveals, scrolls, composed layouts) — regardless of the layer/project (frontend, backend, a local script — all count); what matters is whether *this turn* touches the domain. On turns that do NOT touch it (typecheck, build, deploy, git ops, editing or curl in other domains), **omit 🫟** even if the skill loaded earlier in the session. If other active skills also apply to the same turn, **stack their emojis** in the prefix.
 
 Proven patterns from: elkowar/eww examples, elkowar/dots-of-war, owenrumney/eww-bar, druskus20/eugh, Saimoomedits/eww-widgets, dharmx powermenu guide, iSparsh/gross, Nycta/eww_activate-linux.
 

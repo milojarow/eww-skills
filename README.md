@@ -28,7 +28,7 @@ These skills solve these problems by teaching Claude:
 | **eww-yuck** | Core configuration syntax — defwindow, defwidget, defvar, defpoll, deflisten |
 | **eww-widgets** | Widget reference — containers, display, interactive, alignment, magic variables |
 | **eww-expressions** | Expression language — ternary, elvis, safe access, functions, data access |
-| **eww-styling** | GTK CSS/SCSS — selectors, properties, theming, gotchas (box-shadow, cursor) |
+| **eww-styling** | GTK CSS/SCSS — selectors, properties, theming, gotchas (the `* { all: unset; }` reset, unsupported properties like overflow/transform, yuck-attrs-in-SCSS parse errors) |
 | **eww-patterns** | Real-world patterns — bars, popups, positioning, overlap detection |
 | **eww-troubleshooting** | Debug workflow, common errors, shell pitfalls, systemd hardening |
 

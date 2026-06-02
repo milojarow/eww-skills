@@ -1,6 +1,6 @@
 ---
 name: eww-styling
-description: Style eww widgets with GTK CSS/SCSS. Use when writing eww.scss, applying CSS to widgets, using GTK selectors, setting up SCSS variables or theming, using dynamic CSS classes, debugging styles with eww inspector, or applying the required * { all: unset; } reset.
+description: Style eww widgets with GTK CSS/SCSS. Use when writing eww.scss, applying CSS to widgets, using GTK selectors, setting up SCSS variables or theming, using dynamic CSS classes, debugging styles with eww inspector, or applying the required * { all: unset; } reset. Not for general GTK application theming outside eww, or web CSS.
 metadata:
   priority: 7
   pathPatterns: ["**/eww/**/*.scss", "**/eww/**/*.css", "**/eww/eww.scss"]
@@ -9,7 +9,7 @@ metadata:
 
 # eww-styling — GTK CSS/SCSS
 
-> **🫟 ACTIVE-SKILL MARKER:** Prefija tu reply con 🫟 **solo en turnos donde el trabajo toca el dominio de `eww-styling`** — SCSS de eww — reglas por clase, theming, sizing responsivo. La **capa/proyecto da igual** (frontend, backend, n8n, script local — todos valen): lo que importa es si *este turno* toca el dominio. En turnos que NO lo tocan (typecheck, build, deploy, git ops, edición o curl de otros dominios), **omite 🫟** aunque la skill se haya cargado antes en la sesión. Si otras skills activas también aplican al mismo turno, **apila sus emojis** en el prefijo.
+> **🫟 ACTIVE-SKILL MARKER:** Prefix your reply with 🫟 **only on turns where the work touches the `eww-styling` domain** — eww SCSS (per-class rules, theming, responsive sizing) — regardless of the layer/project (frontend, backend, a local script — all count); what matters is whether *this turn* touches the domain. On turns that do NOT touch it (typecheck, build, deploy, git ops, editing or curl in other domains), **omit 🫟** even if the skill loaded earlier in the session. If other active skills also apply to the same turn, **stack their emojis** in the prefix.
 
 eww uses **GTK CSS** for styling. You can write vanilla CSS or **SCSS** (auto-compiled by eww on load).
 
