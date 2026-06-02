@@ -1,0 +1,20 @@
+{
+  "id": "eww-troubleshooting-001",
+  "skills": ["eww-troubleshooting"],
+  "query": "My eww bar is acting weird — variables are stale. I want to kill the daemon and start it fresh. eww runs from a systemd user service. What's the right way to restart it?",
+  "expected_behavior": [
+    "Activates the eww-troubleshooting skill",
+    "Routes to SYSTEMD.md (and the systemd warning at the top of the Debug Workflow)",
+    "Warns AGAINST `eww kill` / `eww daemon` when a systemd user service with Restart=always manages eww",
+    "Explains that manually killing it lets systemd relaunch its own daemon while the manual one also starts, producing two daemons and duplicate / double bars",
+    "Prescribes `systemctl --user restart eww.service` for a full restart and `eww reload` for a config-only change"
+  ],
+  "expected_content": [
+    "systemctl --user restart eww.service",
+    "duplicate",
+    "Restart=always",
+    "SYSTEMD.md"
+  ],
+  "priority": "high",
+  "notes": "Guards against the #1 desktop-eww trap: a naive answer says 'just eww kill && eww daemon', which on a systemd-managed instance spawns a second daemon and gives the user double bars. The skill knows to detect the service first and use systemctl restart."
+}

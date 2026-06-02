@@ -1,0 +1,19 @@
+{
+  "id": "eww-styling-001",
+  "skills": ["eww-styling"],
+  "query": "I'm styling my eww bar in eww.scss. I set background-color and padding on my .bar class and color on my buttons, but the buttons still have weird borders and padding I didn't ask for, and the font isn't mine. The CSS is clearly loading. What's wrong?",
+  "expected_behavior": [
+    "Activates the eww-styling skill",
+    "Identifies that GTK applies its own opinionated default styles to every widget",
+    "Instructs to add * { all: unset; } as the very first rule at the top of eww.scss",
+    "Explains the reset sets every property to its initial value so rules build on a clean slate",
+    "Routes to SCSS_PATTERNS.md (the GTK reset patterns) and/or the SKILL.md reset section"
+  ],
+  "expected_content": [
+    "* { all: unset; }",
+    "GTK default",
+    "SCSS_PATTERNS.md"
+  ],
+  "priority": "high",
+  "notes": "The single most common eww styling wall: without the global reset, GTK's default button relief/padding/borders and theme font bleed through and override custom rules. A naive answer would chase per-button overrides or !important instead of adding the one-line reset. Guards against missing the all:unset requirement."
+}

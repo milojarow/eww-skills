@@ -1,0 +1,20 @@
+{
+  "id": "eww-widgets-002",
+  "skills": ["eww-widgets"],
+  "query": "I made an app-launcher window in eww with an input field for the search box, but when it opens I literally cannot click into it or type anything — keystrokes do nothing. The input widget itself looks fine. What am I missing?",
+  "expected_behavior": [
+    "Activates the eww-widgets skill",
+    "Routes to INTERACTIVE.md (the input widget reference)",
+    "Diagnoses that the containing defwindow is missing :focusable \"ondemand\" — without it the input cannot receive keyboard focus",
+    "Shows the fix: add :focusable \"ondemand\" to the defwindow, not to the input widget",
+    "Does NOT chase the input's own props (value/onchange) since those are not the cause"
+  ],
+  "expected_content": [
+    "focusable",
+    "ondemand",
+    "defwindow",
+    "INTERACTIVE.md"
+  ],
+  "priority": "high",
+  "notes": "Guards against debugging the input widget's own properties when the real cause is window-level. The skill documents this as a CRITICAL callout: an input that won't accept keystrokes means the window lacks :focusable \"ondemand\". A naive answer would tweak :onchange or suggest a button, missing the window requirement entirely."
+}

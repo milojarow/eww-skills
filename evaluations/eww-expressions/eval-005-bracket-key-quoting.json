@@ -1,0 +1,22 @@
+{
+  "id": "eww-expressions-005",
+  "skills": ["eww-expressions"],
+  "query": "How do I read the disk usage for my root mount and my CPU package temperature in an eww label? I tried {EWW_DISK[/].used_perc} and {EWW_TEMPS.coretemp Package id 0} and both throw parse/syntax errors.",
+  "expected_behavior": [
+    "Activates the eww-expressions skill",
+    "Routes to data access / bracket-vs-dot notation (DATA_ACCESS.md 'Common Mistake: Bracket vs Dot Notation', also SKILL.md Data Access)",
+    "Identifies wall 1: dot notation breaks on keys containing slashes or spaces — {EWW_TEMPS.coretemp Package id 0} fails because the spaces break parsing",
+    "Identifies wall 2: bracket notation needs the key QUOTED — {EWW_DISK[/]...} parses the bare / as division, not a string key",
+    "Gives the correct forms: {EWW_DISK[\"/\"].used_perc} and {EWW_TEMPS[\"coretemp Package id 0\"]}",
+    "Recommends wrapping with round() for clean display and notes the exact EWW_TEMPS key name is hardware-specific (check with eww state)"
+  ],
+  "expected_content": [
+    "EWW_DISK[\"/\"]",
+    "EWW_TEMPS[\"coretemp Package id 0\"]",
+    "bracket notation",
+    "quote",
+    "DATA_ACCESS.md"
+  ],
+  "priority": "low",
+  "notes": "Guards against two coupled bracket/dot-notation walls: (1) dot paths can't hold slashes or spaces, and (2) an unquoted key inside [] is parsed as an expression — a bare / becomes the division operator. Keys with special chars MUST use quoted bracket notation. A naive answer might quote one and not the other, or use dot notation for the spaced thermal-zone key."
+}

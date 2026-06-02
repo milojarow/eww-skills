@@ -1,0 +1,21 @@
+{
+  "id": "eww-expressions-001",
+  "skills": ["eww-expressions"],
+  "query": "My eww revealer never opens even though my variable is true. I have (revealer :reveal \"${show_panel}\") and a button that toggles show_panel. The reveal seems stuck. What's wrong?",
+  "expected_behavior": [
+    "Activates the eww-expressions skill",
+    "Identifies the wall: wrapping an expression in double quotes inside an attribute turns the result into a string literal, so :reveal receives the string \"true\"/\"false\" instead of a boolean",
+    "Routes to the ${} vs {} syntax rule (SKILL.md 'Syntax Rules' / 'Common Mistakes', or OPERATORS.md context)",
+    "Gives the fix: use a bare expression with {} and NO surrounding quotes — (revealer :reveal {show_panel})",
+    "Explains that ${} string interpolation is only for inside \"...\" or backtick strings, not for boolean/number attribute values"
+  ],
+  "expected_content": [
+    "{show_panel}",
+    "no quotes",
+    "string",
+    "boolean",
+    "SKILL.md"
+  ],
+  "priority": "high",
+  "notes": "Guards against the single most common eww expression error: quoting a boolean/number attribute value. (button :active \"${count > 0}\") or (revealer :reveal \"${x}\") yields a literal string 'true'/'false', which GTK does not treat as the boolean — the widget silently misbehaves. A naive answer blames the variable or the toggle logic instead of the quotes."
+}

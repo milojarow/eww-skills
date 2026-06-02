@@ -1,0 +1,22 @@
+{
+  "id": "eww-styling-003",
+  "skills": ["eww-styling"],
+  "query": "I want a scrolling marquee for now-playing text in my eww bar. I tried clipping the container with `overflow: hidden` and animating the text with `transform: translateX(-200px)` in a @keyframes, but it doesn't scroll and a bunch of my other styles broke too. How do I do a horizontal marquee in eww?",
+  "expected_behavior": [
+    "Activates the eww-styling skill",
+    "Identifies that transform and overflow are NOT implemented in GTK3's CSS engine and cause a parse error that breaks all styles below that line",
+    "For clipping, recommends the overlay widget (GTK clips overlay children to the overlay's allocated size) instead of overflow: hidden",
+    "For positional animation, recommends animating margin-left (or margin-top) in @keyframes instead of transform",
+    "Warns that margin-left on a widget in normal layout flow shifts adjacent widgets, so the animated strip must be an overlay child to stay out of layout flow",
+    "Routes to CSS_REFERENCE.md (properties that don't work) and the marquee pattern in SKILL.md"
+  ],
+  "expected_content": [
+    "transform",
+    "overflow",
+    "overlay",
+    "margin-left",
+    "CSS_REFERENCE.md"
+  ],
+  "priority": "high",
+  "notes": "transform and overflow look like valid CSS but GTK3 doesn't implement them — each is a parse error that silently kills every rule below it. A naive answer transplants the web marquee idiom (overflow:hidden + transform) and never works. The skill's GTK-native fix is overlay-for-clipping + margin-left keyframes, with the layout-flow caveat that the strip must be an overlay child."
+}

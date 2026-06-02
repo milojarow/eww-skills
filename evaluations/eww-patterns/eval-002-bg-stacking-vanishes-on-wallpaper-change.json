@@ -1,0 +1,15 @@
+{
+  "id": "eww-patterns-002",
+  "skills": ["eww-patterns"],
+  "query": "I have a desktop disk-usage widget with :stacking \"bg\". It shows up fine when I log in, but as soon as I change my wallpaper with swww it disappears. My other widgets are fine. Why?",
+  "expected_behavior": [
+    "Activates the eww-patterns skill",
+    "Routes to POSITIONING.md (Stacking Layer vs swaybg section)",
+    "Explains that eww's 'bg' stacking and the wallpaper daemon (swaybg/swww/wpaperd) share the wlr-layer-shell 'background' layer, and surfaces stack in creation order — the new wallpaper surface lands on top and hides the widget",
+    "Does NOT suggest re-opening the widget after every wallpaper change as the fix",
+    "Fixes it by switching to :stacking \"bottom\" so the widget sits above the wallpaper but below normal windows"
+  ],
+  "expected_content": ["POSITIONING.md", "stacking", "bottom", "background layer", "wlr-layer-shell"],
+  "priority": "high",
+  "notes": "Guards against the naive 'just reopen the widget' band-aid. The real cause is layer ordering within the shared background layer; only moving to the 'bottom' layer survives a wallpaper change. A model that doesn't know the four-layer ordering would misdiagnose this as an eww bug."
+}

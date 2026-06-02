@@ -1,0 +1,21 @@
+{
+  "id": "eww-styling-004",
+  "skills": ["eww-styling"],
+  "query": "I have a volume slider (eww scale) and I want the filled part to be purple and the empty track behind it to be dark gray. I styled `scale trough highlight` with the purple and `scale trough` with the gray, but the whole bar comes out gray — the purple fill never shows. What gives?",
+  "expected_behavior": [
+    "Activates the eww-styling skill",
+    "Explains scale's GTK sub-elements: trough is the full track, highlight is the filled portion, slider is the knob",
+    "Identifies that scale trough matches the highlight too, so when scale trough is defined AFTER scale trough highlight it overrides the highlight's color",
+    "Instructs to define scale trough first, then the more specific scale trough highlight after it so the fill color wins",
+    "Optionally mentions using min-width/min-height (not width/height) to size the trough",
+    "Routes to CSS_REFERENCE.md or SCSS_PATTERNS.md scale sub-element styling"
+  ],
+  "expected_content": [
+    "scale trough highlight",
+    "trough",
+    "min-height",
+    "SCSS_PATTERNS.md"
+  ],
+  "priority": "medium",
+  "notes": "scale trough is an ancestor of highlight, so a later scale trough rule clobbers an earlier scale trough highlight rule. The fix is purely ordering/specificity: trough first, highlight after. A naive answer would add !important or assume the highlight class name is wrong, missing the ordering rule the skill documents."
+}

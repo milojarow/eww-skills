@@ -1,0 +1,20 @@
+{
+  "id": "eww-widgets-003",
+  "skills": ["eww-widgets"],
+  "query": "I want my status label to sit at the far right edge of its box, so I set :halign \"end\" on the label. But it just stays glued to the left next to the other widgets — halign \"end\" does absolutely nothing. Why?",
+  "expected_behavior": [
+    "Activates the eww-widgets skill",
+    "Routes to ALIGNMENT.md (the alignment & expand behavior model)",
+    "Explains that halign only positions a widget WITHIN the extra space its parent allocates — with no extra space (the default hexpand false), the label is already at its minimum size, so halign has no visible effect",
+    "Shows the fix: add :hexpand true so the label claims the remaining space, then :halign \"end\" pulls it to the right edge",
+    "Mentions the same rule applies vertically (valign needs vexpand)"
+  ],
+  "expected_content": [
+    "hexpand",
+    "halign",
+    "allocated space",
+    "ALIGNMENT.md"
+  ],
+  "priority": "medium",
+  "notes": "Guards against the single most common eww alignment mistake: halign/valign without hexpand/vexpand. The skill's mental model (alignment positions within parent-allocated space, not the screen) is exactly what a naive answer misses — it would suggest margins, a spacer in the wrong place, or claim halign is broken."
+}

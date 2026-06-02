@@ -1,0 +1,20 @@
+{
+  "id": "eww-troubleshooting-005",
+  "skills": ["eww-troubleshooting"],
+  "query": "All my desktop widgets (clock, system monitor) use :stacking \"bg\" and they vanish the instant I change my wallpaper with swww. eww active-windows still lists them as open. The fg-stacked bar is fine. What's happening?",
+  "expected_behavior": [
+    "Activates the eww-troubleshooting skill",
+    "Routes to the ':stacking \"bg\" widgets disappear after a wallpaper change' error in COMMON_ERRORS.md",
+    "Explains that eww 'bg' and the wallpaper daemon (swaybg/swww/wpaperd) share the wlr-layer-shell background layer; wlroots stacks by creation order, so the new wallpaper surface lands on top and obscures the bg widgets",
+    "Prescribes switching persistent desktop widgets to `:stacking \"bottom\"` (above wallpaper, below normal windows)",
+    "Offers the bulk migration sed + `systemctl --user restart eww.service`"
+  ],
+  "expected_content": [
+    "stacking \"bottom\"",
+    "background",
+    "layer-shell",
+    "COMMON_ERRORS.md"
+  ],
+  "priority": "low",
+  "notes": "Guards against chasing a phantom 'eww closed the window' bug (active-windows still lists them) when the real cause is a layer-shell stacking conflict with the wallpaper daemon. The fix is a one-word stacking change, not a daemon restart hunt."
+}

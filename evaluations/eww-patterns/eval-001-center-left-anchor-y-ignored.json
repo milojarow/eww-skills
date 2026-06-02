@@ -1,0 +1,15 @@
+{
+  "id": "eww-patterns-001",
+  "skills": ["eww-patterns"],
+  "query": "My eww widget is anchored 'center left' and I set :y to 150px but it won't move down vertically no matter what value I use. The :x offset works fine. What's wrong?",
+  "expected_behavior": [
+    "Activates the eww-patterns skill",
+    "Routes to POSITIONING.md (Anchor Edge vs Anchor Center section)",
+    "Explains that single-edge anchors ('center left'/'center right') LOCK the perpendicular axis — the compositor centers along the unnamed axis and silently ignores the :y offset",
+    "Does NOT suggest tweaking the :y value harder or blame eww/GTK — identifies the layer-shell anchor semantics as the cause",
+    "Fixes it by switching to a corner anchor ('top left' / 'bottom left') so both axes have a fixed reference, converting the desired y into a corner-relative coordinate"
+  ],
+  "expected_content": ["POSITIONING.md", "center left", "corner anchor", "top left", "silently ignored"],
+  "priority": "high",
+  "notes": "A naive answer keeps adjusting the :y value (the symptom) instead of recognizing that 'center left' is a layer-shell constraint that locks the vertical axis. The skill knows the perpendicular axis is locked and the only fix is a corner anchor — without it the user burns time fighting an offset the compositor discards."
+}

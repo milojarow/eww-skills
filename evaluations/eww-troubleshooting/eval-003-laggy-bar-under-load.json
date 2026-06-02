@@ -1,0 +1,20 @@
+{
+  "id": "eww-troubleshooting-003",
+  "skills": ["eww-troubleshooting"],
+  "query": "My eww workspace indicator lags badly — I switch workspace and the bar updates a second late, or not at all, but ONLY when the machine is under heavy load. Waybar on the same setup is instant. Is eww just slow?",
+  "expected_behavior": [
+    "Activates the eww-troubleshooting skill",
+    "Routes to the 'Laggy bar / missed updates' section of SKILL.md",
+    "Rejects 'eww is slow' — the deflisten emit script is doing too much work per event (O(processes) or O(disk)), paid several times per keypress since WMs fire multiple events per action",
+    "Names the canonical offender: scanning all of /proc per event (cheap idle, balloons under memory pressure / swap), and spawning the WM CLI (swaymsg/i3-msg) per event (fork+exec)",
+    "Prescribes the fix: hold a persistent IPC socket to $SWAYSOCK instead of spawning the CLI, update incrementally (touch only what changed), keep the emit path a few ms; offers the timing-loop diagnostic measured under real load not idle"
+  ],
+  "expected_content": [
+    "deflisten",
+    "/proc",
+    "$SWAYSOCK",
+    "under load"
+  ],
+  "priority": "medium",
+  "notes": "Guards against blaming the daemon or the scripting language. The skill knows the real cause is per-event work in the listener (proc scan or CLI spawn) that only hurts under memory pressure, and that the architectural fix is a persistent socket + incremental updates — same reason a native bar stays smooth."
+}

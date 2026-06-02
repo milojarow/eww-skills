@@ -1,0 +1,21 @@
+{
+  "id": "eww-widgets-004",
+  "skills": ["eww-widgets"],
+  "query": "My RAM widget shows the wrong amount. I'm using {formatbytes(EWW_RAM.used_mem)} but it reports something like 7.5 MiB used when my machine actually has gigabytes in use. The number is off by a huge factor. What's going on?",
+  "expected_behavior": [
+    "Activates the eww-widgets skill",
+    "Routes to MAGIC_VARS.md (the EWW_RAM reference)",
+    "Identifies that EWW_RAM byte fields are in KB, not bytes — so formatbytes() interprets the KB value as bytes and underreports by 1024x",
+    "Shows the fix: multiply by 1024 first, e.g. {formatbytes(EWW_RAM.used_mem * 1024)}",
+    "Optionally notes EWW_DISK and EWW_NET use bytes directly (so the *1024 trick is EWW_RAM-specific) and that used_mem_perc is already a percentage if they just want a number"
+  ],
+  "expected_content": [
+    "KB",
+    "1024",
+    "formatbytes",
+    "used_mem",
+    "MAGIC_VARS.md"
+  ],
+  "priority": "high",
+  "notes": "Guards against the 1024x unit bug. The skill documents that EWW_RAM values are in KB (unlike EWW_DISK which is bytes) and that you must multiply by 1024 before formatbytes. A naive answer would assume bytes (consistent with most APIs) and never find the off-by-1024 error, or wrongly blame formatbytes."
+}

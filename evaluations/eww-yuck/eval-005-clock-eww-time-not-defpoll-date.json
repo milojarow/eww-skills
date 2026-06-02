@@ -1,0 +1,19 @@
+{
+  "id": "eww-yuck-005",
+  "skills": ["eww-yuck"],
+  "query": "I want a live clock in my eww bar that updates every second. Should I set up a defpoll that runs `date +%H:%M` on a 1s interval?",
+  "expected_behavior": [
+    "Activates the eww-yuck skill",
+    "Pushes back: a defpoll running `date` every second is wasteful and unnecessary",
+    "Recommends the built-in EWW_TIME magic variable with formattime(), e.g. (label :text {formattime(EWW_TIME, \"%H:%M\")})",
+    "Explains EWW_TIME is updated every second by eww itself with no script required",
+    "Routes to the defpoll/EWW_TIME guidance in SKILL.md (and may cross-reference the eww-widgets skill for magic variables or eww-expressions for formattime)"
+  ],
+  "expected_content": [
+    "EWW_TIME",
+    "formattime",
+    "SKILL.md"
+  ],
+  "priority": "medium",
+  "notes": "Guards against reinventing the clock with a per-second defpoll on `date`. The skill explicitly flags this as inefficient and points to the built-in EWW_TIME + formattime(). CRITICAL callout in SKILL.md defpoll section."
+}

@@ -1,0 +1,22 @@
+{
+  "id": "eww-styling-002",
+  "skills": ["eww-styling"],
+  "query": "Half my eww widgets suddenly lost all their styling — everything below a certain point in eww.scss renders unstyled, even though the top of the file looks fine. The last thing I added was `spacing: 4px;` to one of my box classes to space out the children. Why did that break everything?",
+  "expected_behavior": [
+    "Activates the eww-styling skill",
+    "Identifies spacing as a yuck widget attribute, NOT a GTK CSS property",
+    "Explains an invalid property causes a parse error that stops all CSS loading from that line onward, silently breaking every widget styled below it",
+    "Tells the user to set :spacing in the yuck file instead, and use margin on children (e.g. .box > * { margin: 0 4px; }) for CSS-side spacing",
+    "Lists the other yuck-only attributes that must never appear in SCSS (halign, valign, hexpand, vexpand, space-evenly, orientation)",
+    "Suggests eww inspector / eww logs to confirm the parse error"
+  ],
+  "expected_content": [
+    "spacing",
+    "parse error",
+    ":spacing",
+    "halign",
+    "CSS_REFERENCE.md"
+  ],
+  "priority": "high",
+  "notes": "Classic confusion between yuck layout attributes and GTK CSS properties. Writing spacing/halign/valign/hexpand in .scss is a parse error that kills all rules below it, so the symptom (everything below breaks) looks unrelated to the cause. A naive answer would debug the broken widgets individually instead of removing the one invalid line and moving spacing to yuck."
+}

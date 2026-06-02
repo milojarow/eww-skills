@@ -1,0 +1,20 @@
+{
+  "id": "eww-styling-005",
+  "skills": ["eww-styling"],
+  "query": "My eww bar has border-radius and the window background is set to transparent, but the four corners of the bar show up as solid black squares instead of being see-through. How do I get actually transparent rounded corners?",
+  "expected_behavior": [
+    "Activates the eww-styling skill",
+    "Identifies that black corners come from a fully-opaque background-color on the rounded element; GTK renders the area outside the radius with that opaque color",
+    "Instructs to give the bar/element background an rgba color with alpha < 1.0 (or transparent) so the clipped-off corners are see-through",
+    "Confirms window { background-color: transparent; } is needed on the eww window container too",
+    "Routes to SCSS_PATTERNS.md (rounded corners / transparent corners require rgba alpha < 1.0)"
+  ],
+  "expected_content": [
+    "rgba",
+    "border-radius",
+    "transparent",
+    "SCSS_PATTERNS.md"
+  ],
+  "priority": "medium",
+  "notes": "Rounded transparent corners on a GTK bar require the element's own background to use rgba with alpha < 1.0 (plus window background transparent). A naive answer sets border-radius and assumes the corners become transparent automatically, leaving the opaque fill painting black squares behind the rounded clip. Guards the rgba-alpha rounded-corner gotcha."
+}

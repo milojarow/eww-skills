@@ -1,0 +1,22 @@
+{
+  "id": "eww-expressions-002",
+  "skills": ["eww-expressions"],
+  "query": "I want to give a special CSS class to sway workspaces whose name starts with 'special:'. I wrote {workspace.name =~ \"^special:.+$\"} but I keep second-guessing the order — in bash I'd write [[ $name =~ pattern ]]. Which side is the regex in eww?",
+  "expected_behavior": [
+    "Activates the eww-expressions skill",
+    "Routes to the regex match =~ operator (SKILL.md '=~' section and OPERATORS.md 'Regex Match Operator')",
+    "States the wall explicitly: in eww the LEFT operand is the regex pattern and the RIGHT operand is the string being tested — pattern =~ string",
+    "Notes this is the OPPOSITE of bash ([[ string =~ pattern ]]) and Perl/Ruby",
+    "Confirms the user's example {workspace.name =~ \"^special:.+$\"} is actually backwards relative to the rule and the correct form puts the pattern on the left: {\"^special:.+$\" =~ workspace.name}, OR mentions matches(string, regex) as the string-first alternative",
+    "Mentions eww uses Rust regex syntax (no lookaheads)"
+  ],
+  "expected_content": [
+    "pattern =~ string",
+    "left",
+    "bash",
+    "Rust regex",
+    "OPERATORS.md"
+  ],
+  "priority": "high",
+  "notes": "Guards against the reversed-operand wall. =~ in eww is regex-on-LEFT, string-on-RIGHT — backwards from bash/Perl/Ruby muscle memory. Getting it wrong silently tests the wrong direction and the class never applies. The skill also offers matches(string, regex) which uses the more familiar string-first order, so a good answer surfaces both."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "eww-widgets-001",
+  "skills": ["eww-widgets"],
+  "query": "I'm building my eww bar. Left side I want my workspaces and the window title, center is the clock, and on the right I need network, battery, volume and the systray. I tried centerbox but it's throwing an error. Here's roughly what I have: (centerbox :orientation \"h\" (workspaces) (title) (clock) (network) (battery) (volume) (systray)). What's wrong?",
+  "expected_behavior": [
+    "Activates the eww-widgets skill",
+    "Routes to CONTAINERS.md (the centerbox deep-dive)",
+    "Identifies that centerbox requires EXACTLY 3 children, not more or fewer",
+    "Fixes it by wrapping the left group (workspaces + title) in a box and the right group (network/battery/volume/systray) in another box, leaving clock as the single center child — so the centerbox gets exactly 3 children"
+  ],
+  "expected_content": [
+    "exactly 3 children",
+    "centerbox",
+    "wrap",
+    "box",
+    "CONTAINERS.md"
+  ],
+  "priority": "high",
+  "notes": "Guards against the naive answer that treats centerbox like a flexible box accepting any number of children. The skill documents the hard 3-children constraint and the standard fix (group zones in a box). A wrong answer would suggest hexpand spacers inside a single box, which the skill explicitly calls out as fragile (center drifts)."
+}

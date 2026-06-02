@@ -1,0 +1,15 @@
+{
+  "id": "eww-patterns-003",
+  "skills": ["eww-patterns"],
+  "query": "I want CPU, RAM and GPU temp gauges on my eww dashboard. My plan is a defpoll every 3s that runs a Python+Cairo script rendering each gauge to a PNG in /tmp, then show it with an image widget. How do I make eww reload the image when it changes?",
+  "expected_behavior": [
+    "Activates the eww-patterns skill",
+    "Routes to NATIVE_FIRST.md",
+    "Stops the user before answering the literal question — flags the PNG-in-/tmp render-per-tick approach as an anti-pattern (fork+exec, Python+Cairo import, disk I/O per tick)",
+    "Identifies the path-alternation workaround (gauge-0.png / gauge-1.png) as the smoke alarm that you're fighting GTK's image cache",
+    "Recommends driving a native circular-progress directly from a magic variable (EWW_RAM, EWW_CPU) or a one-line defpoll (nvidia-smi for GPU temp), with color tiers as CSS classes toggled by a ternary"
+  ],
+  "expected_content": ["NATIVE_FIRST.md", "circular-progress", "path alternation", "EWW_RAM", "magic var"],
+  "priority": "high",
+  "notes": "The user asks HOW to make the image-cache trick work; the right move is to not do it at all. The skill knows eww draws rings natively via Cairo and that the path-alternation hack is the tell you've left the happy path. A naive answer would helpfully explain the two-path cache-busting trick and entrench the expensive anti-pattern."
+}

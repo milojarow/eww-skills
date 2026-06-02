@@ -1,0 +1,21 @@
+{
+  "id": "eww-troubleshooting-002",
+  "skills": ["eww-troubleshooting"],
+  "query": "I just added a few rules to one widget's scss file and now EVERY widget in my bar lost its styling — not just the one I edited. The inspector shows no custom CSS applying anywhere. What broke?",
+  "expected_behavior": [
+    "Activates the eww-troubleshooting skill",
+    "Routes to COMMON_ERRORS.md (the 'Yuck layout attribute used as CSS property' / grass-unsupported-property sections)",
+    "Identifies that an invalid property halts grass (eww's SCSS compiler) at that line, so every rule after it silently disappears across all widgets",
+    "Names the likely culprits: yuck-only attributes written as CSS (`spacing`, `halign`, `valign`, `hexpand`, `vexpand`, `orientation`) or grass-unsupported properties (`gap`, `line-height`)",
+    "Gives the diagnostic: `journalctl --user -u eww.service` and grep for 'is not a valid property' / 'error:'"
+  ],
+  "expected_content": [
+    "is not a valid property",
+    "grass",
+    "journalctl --user -u eww.service",
+    "spacing",
+    "COMMON_ERRORS.md"
+  ],
+  "priority": "high",
+  "notes": "Guards against treating a one-file change as a local CSS problem. The wall: grass stops at the first invalid property, so an error in widget A's scss silently kills styling for B, C, D too — and the error names a compiled line number, not the widget. A naive answer hunts in the wrong file."
+}

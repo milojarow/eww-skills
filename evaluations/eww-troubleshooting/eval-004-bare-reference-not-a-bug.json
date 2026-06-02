@@ -1,0 +1,20 @@
+{
+  "id": "eww-troubleshooting-004",
+  "skills": ["eww-troubleshooting"],
+  "query": "My battery label isn't updating. The yuck says `(label :text battery)` — no curly braces. Should I wrap it as `(label :text {battery})` to fix it?",
+  "expected_behavior": [
+    "Activates the eww-troubleshooting skill",
+    "Routes to the 'Valid yuck Syntax That Looks Like a Bug' section of SKILL.md",
+    "Corrects the assumption: a bare variable reference `(label :text battery)` is perfectly valid yuck — equivalent to `{battery}` — and is NOT the bug",
+    "Directs the user to verify the real cause first with `eww state` (is the `battery` variable actually populated?), since `{}` is only required for operators, functions, or field access like `{round(battery,0)}` or `{EWW_BATTERY.BAT0.capacity}`",
+    "Points to the broader debug workflow (eww state / eww logs) to find the actual stale-variable cause"
+  ],
+  "expected_content": [
+    "eww state",
+    "valid",
+    "battery",
+    "SKILL.md"
+  ],
+  "priority": "medium",
+  "notes": "Guards against the seductive wrong fix — adding {} to a bare reference. The skill explicitly flags that bare references are valid syntax and that the missing-{} suspicion must be ruled out with `eww state` before touching it. A naive answer 'fixes' working syntax and never finds the real stale-variable cause."
+}

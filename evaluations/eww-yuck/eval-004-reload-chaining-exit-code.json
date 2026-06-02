@@ -1,0 +1,19 @@
+{
+  "id": "eww-yuck-004",
+  "skills": ["eww-yuck"],
+  "query": "My sway exec line runs `eww reload && eww open dashboard` after editing the config, but sometimes the dashboard never opens even though reload looked fine. I removed an old window from the config recently. What's happening and how should I chain these?",
+  "expected_behavior": [
+    "Activates the eww-yuck skill",
+    "Routes to CLI.md (eww reload section)",
+    "Explains that eww reload exits with code 1 when a previously-open window no longer exists in the config, so with && the second command never runs",
+    "Recommends using `;` instead of `&&`: `eww reload ; eww open dashboard` so the open runs regardless of reload's exit code",
+    "May note that reload should be tried before eww kill, and full restart (kill && daemon && open) is the fallback only when the config fails to parse"
+  ],
+  "expected_content": [
+    "exit",
+    "reload ; eww open",
+    "CLI.md"
+  ],
+  "priority": "medium",
+  "notes": "Guards against the && vs ; chaining trap with eww reload — a removed window makes reload return non-zero, silently skipping the open. A naive answer would blame the config parse; the skill knows the exit-code behavior. CLI.md 'eww reload' Important behavior."
+}

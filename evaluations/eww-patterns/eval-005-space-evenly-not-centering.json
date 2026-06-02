@@ -1,0 +1,15 @@
+{
+  "id": "eww-patterns-005",
+  "skills": ["eww-patterns"],
+  "query": "I want to center a single clock label in my eww bar row. I put it in a box with :space-evenly true but instead of centering, the label stretches to fill the whole row width. How do I actually center it?",
+  "expected_behavior": [
+    "Activates the eww-patterns skill",
+    "Routes to POSITIONING.md (the T1 critical failure mode / Quick Decision Guide) — :space-evenly true expands a single child to fill the row, it does NOT center it",
+    "For true centering, recommends the T3 approach (:hexpand true + :halign \"center\" on the element) or two equal (box :hexpand true) spacers flanking the element",
+    "For a 3-zone bar, points to centerbox as the top-level layout that geometrically centers its middle child regardless of left/right widths",
+    "Does NOT recommend fragile inline margin-left math for centering"
+  ],
+  "expected_content": ["POSITIONING.md", "space-evenly", "halign", "hexpand", "centerbox"],
+  "priority": "medium",
+  "notes": "Captures the most common centering mistake: reaching for :space-evenly true, which expands rather than centers. The skill knows the correct tools are hexpand+halign (T3), flanking spacers (T2), or centerbox for full bars — and that inline margin math is fragile and unreliable."
+}

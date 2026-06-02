@@ -1,0 +1,22 @@
+{
+  "id": "eww-expressions-003",
+  "skills": ["eww-expressions"],
+  "query": "I use {download_count ?: \"none\"} to show 'none' when there are no downloads, but when the count is actually 0 it still prints 0 instead of 'none'. I thought the elvis operator falls back on falsy values like in JavaScript. Why isn't 0 triggering the default?",
+  "expected_behavior": [
+    "Activates the eww-expressions skill",
+    "Routes to the Elvis operator section (SKILL.md and OPERATORS.md 'Elvis Operator')",
+    "States the wall: eww's elvis ?: only falls back on an empty string \"\" or JSON null — it does NOT treat 0, false, or [] as falsy, unlike JavaScript",
+    "Explains that 0 is a valid meaningful value, so ?: correctly returns it",
+    "Gives the fix: use a ternary that checks the specific condition, e.g. {download_count == 0 ? \"none\" : download_count}",
+    "Distinguishes elvis (empty/null coalescing) from ternary (arbitrary condition)"
+  ],
+  "expected_content": [
+    "?:",
+    "null",
+    "empty string",
+    "ternary",
+    "OPERATORS.md"
+  ],
+  "priority": "medium",
+  "notes": "Guards against importing JavaScript/Kotlin falsy-coalescing intuition. eww's elvis triggers ONLY on \"\" or JSON null — not 0, false, or []. Someone expecting JS-style truthiness will mis-handle a legitimate zero. The skill explicitly tables this and says to use a ternary when 0 must be special-cased."
+}

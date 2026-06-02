@@ -1,0 +1,15 @@
+{
+  "id": "eww-patterns-004",
+  "skills": ["eww-patterns"],
+  "query": "My eww wallpaper-picker button feels like it drops clicks when I tap it fast. The handler does `idx=$(eww get my-index)`, `list=$(eww get my-list)`, computes the next index, then `eww update my-index=...`. Is this a GTK input bug?",
+  "expected_behavior": [
+    "Activates the eww-patterns skill",
+    "Routes to CLICK_HANDLERS.md",
+    "Rejects the GTK-input-drop hypothesis — identifies cumulative `eww` CLI cost (fork+exec + socket roundtrip, ~50-150ms each) as the real cause; three eww calls per click = ~300-500ms, so rapid clicks queue and feel dropped",
+    "Recommends caching read-only state (list length / index) in tempfiles read with $(<file) so only the single `eww update` does IPC",
+    "Mentions batching multiple updates into one `eww update var=v var2=v2` call and backgrounding slow side effects (swaymsg) fire-and-forget"
+  ],
+  "expected_content": ["CLICK_HANDLERS.md", "eww update", "tempfile", "fork", "queue"],
+  "priority": "medium",
+  "notes": "Guards against blaming GTK/input drops. The skill knows each eww CLI call is an IPC roundtrip and that the fix is removing eww-get calls from the hot path (tempfile cache + single batched update), not chasing a nonexistent input bug."
+}

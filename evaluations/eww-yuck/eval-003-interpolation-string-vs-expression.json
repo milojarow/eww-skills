@@ -1,0 +1,20 @@
+{
+  "id": "eww-yuck-003",
+  "skills": ["eww-yuck"],
+  "query": "My eww scale widget for battery isn't filling correctly — I wrote (scale :value \"${battery}\" :min 0 :max 100) and it behaves wrong. Why?",
+  "expected_behavior": [
+    "Activates the eww-yuck skill",
+    "Explains the two interpolation forms: ${ } is for embedding an expression inside a string literal, { } is for a standalone pure expression as an attribute value",
+    "Diagnoses that \"${battery}\" wraps the value in a string, but :value expects a number — so the wrong type is passed",
+    "Gives the correct fix: (scale :value {battery} :min 0 :max 100) using bare { } without quotes",
+    "Routes to SYNTAX.md (String interpolation section) or the String interpolation section of SKILL.md"
+  ],
+  "expected_content": [
+    "{battery}",
+    "string",
+    "expression",
+    "SYNTAX.md"
+  ],
+  "priority": "high",
+  "notes": "Guards against the most common yuck mistake: using \"${ }\" where a bare { } expression is required, passing a string where a number is expected. CRITICAL rule 2 and the String interpolation tables in both SKILL.md and SYNTAX.md."
+}

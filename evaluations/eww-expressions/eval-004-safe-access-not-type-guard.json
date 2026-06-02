@@ -1,0 +1,22 @@
+{
+  "id": "eww-expressions-004",
+  "skills": ["eww-expressions"],
+  "query": "I added safe access everywhere to stop my widget crashing: {volume?.level}. But volume is just a number (my defpoll returns the integer percent like 42), and the widget still errors. I thought ?. made any access safe. What gives?",
+  "expected_behavior": [
+    "Activates the eww-expressions skill",
+    "Routes to the Safe Access ?. section (SKILL.md 'Safe Access' / 'Common Mistakes' and OPERATORS.md 'When safe access is NOT enough')",
+    "States the wall: ?. only guards against the left side being empty string or JSON null — it does NOT protect against type mismatches; indexing a number or plain string with ?.field still errors",
+    "Explains volume is a number, so .level (or ?.level) is meaningless — there is no field to access on a scalar",
+    "Gives the right fix: drop the field access (use {volume} directly) or use elvis {volume ?: \"0\"} to guard a possibly-empty value, not safe field access",
+    "Clarifies ?. is for optional nested fields on JSON objects/arrays from defpoll/deflisten that may not have fired yet"
+  ],
+  "expected_content": [
+    "?.",
+    "null",
+    "type mismatch",
+    "number",
+    "SKILL.md"
+  ],
+  "priority": "medium",
+  "notes": "Guards against the misconception that ?. is a blanket try/catch. eww safe access only short-circuits on null/empty — it does not catch 'cannot index a number/string'. Sprinkling ?. on scalar values gives false confidence and the widget still errors. The skill calls this out under 'When safe access is NOT enough' and Common Mistake 5."
+}

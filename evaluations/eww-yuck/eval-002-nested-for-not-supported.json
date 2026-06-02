@@ -1,0 +1,20 @@
+{
+  "id": "eww-yuck-002",
+  "skills": ["eww-yuck"],
+  "query": "I want to render groups of workspaces in eww — for each group, loop over its items and draw a label. I tried putting a (for item in {group.items}) inside an outer (for group in groups) but now my whole eww config refuses to load. How do I do nested loops in yuck?",
+  "expected_behavior": [
+    "Activates the eww-yuck skill",
+    "Routes to SYNTAX.md (for loop section)",
+    "States clearly that eww does NOT support nested for loops, and a nested (for ...) inside another (for ...) breaks the entire config load",
+    "Recommends the correct workaround: pre-compute the grouping in the data-source script and emit flat named fields, then use a single for with fixed widgets keyed off those fields",
+    "Optionally warns about the corollary: mixing a static sibling widget (e.g. a plain label with :visible) next to a (for ...) in the same box also causes rendering issues"
+  ],
+  "expected_content": [
+    "nested",
+    "not support",
+    "flat",
+    "SYNTAX.md"
+  ],
+  "priority": "high",
+  "notes": "Guards against attempting nested for loops, which silently break the whole config rather than just the widget. A naive answer might suggest syntax variations; the skill knows nesting is categorically unsupported and the fix is flattening in the data source. SYNTAX.md 'Nested for — NOT SUPPORTED'."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "eww-yuck-001",
+  "skills": ["eww-yuck"],
+  "query": "I added a deflisten in my eww config that runs a fullscreen-subscribe.sh script — the script itself calls eww close/open on the bar when a window goes fullscreen. But nothing happens, the script never seems to run. The yuck parses fine. What's wrong?",
+  "expected_behavior": [
+    "Activates the eww-yuck skill",
+    "Identifies the silent failure mode: a deflisten (or defpoll) variable only starts its script when the variable is referenced somewhere in an open window's widget tree",
+    "Recognizes this is a side-effect-only deflisten whose variable is never displayed, so it is dead code and never starts",
+    "Recommends anchoring the variable with a hidden label, e.g. (label :visible false :text {fullscreen-active}) inside an always-open widget like the bar",
+    "Suggests the diagnostic: run `eww state` and check whether the variable is present at all"
+  ],
+  "expected_content": [
+    "eww state",
+    "visible false",
+    "referenced",
+    "SKILL.md"
+  ],
+  "priority": "high",
+  "notes": "Guards against the #1 silent-failure footgun: side-effect-only deflistens whose script never starts because the variable is never rendered. A naive answer would debug the script or the parse; the skill knows the real cause is the variable not being referenced in any open window. CRITICAL rule 6 in SKILL.md."
+}
