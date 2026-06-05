@@ -120,7 +120,20 @@ If the value changed, the variable is updating correctly. If it did not change:
 
 ### Variables that never appear in `eww state`
 
-If a variable is defined with `defvar`/`defpoll`/`deflisten` but does not appear in `eww state` output, it was not loaded — meaning the config failed to parse before reaching that definition. Check `eww logs`.
+If a variable is defined with `defvar`/`defpoll`/`deflisten` but does not appear in `eww state` output, the usual cause is that the config failed to parse before reaching that definition. Check `eww logs`.
+
+**But absence from `eww state` is NOT proof a variable failed to load.** `eww state` only lists variables referenced by *currently-open* windows (eww resolves the variable graph lazily). A `defvar` used solely by a window that is **closed** will not appear in `eww state` even though it loaded perfectly. Do not conclude "my new defvar didn't load" from its absence here.
+
+To actually test whether a var or window exists in the loaded config:
+
+```bash
+# Variable exists → exits 0 (the value may legitimately be an empty string)
+eww get <var>
+
+# Window exists → eww errors loudly if the name is unknown; silent success
+# plus the name appearing in `eww active-windows` means it loaded fine
+eww open <window>
+```
 
 ### JSON variables
 
